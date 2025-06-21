@@ -1,6 +1,6 @@
 // app/api/kelolabuku/route.js
 
-import { db } from '../lib/firebase'
+import { db } from '../../lib/firebase'
 import { collection, getDocs, addDoc } from 'firebase/firestore'
 
 // GET: Ambil semua buku dari Firestore
