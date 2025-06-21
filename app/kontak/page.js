@@ -20,7 +20,7 @@ export default function Contact() {
 
         <div className="w-full text-left text-sm text-gray-600 space-y-2">
           <p><span className="font-semibold">📍 Alamat:</span> Bandung, Indonesia</p>
-          <p><span className="font-semibold">📧 Email:</span> zaraazahh@email.com</p>
+          <p><span className="font-semibold">📧 Email:</span> zaraazahh.email.com</p>
           <p><span className="font-semibold">📱 No HP:</span> 08xxxxxxxxxx</p>
           <p><span className="font-semibold">🌐 Website:</span> komunitas-literasi.vercel.app</p>
         </div>
