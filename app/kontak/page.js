@@ -1,6 +1,7 @@
 'use client'
 // pages/contact.js
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Contact() {
   return (
@@ -26,12 +27,14 @@ export default function Contact() {
         </div>
       </div>
 
-      <a
-        href="/"
-        className="mt-6 text-sm text-[#4f0a0b] underline hover:text-[#2d0809]"
-      >
-        ← Kembali ke Dashboard
-      </a>
+
+<Link
+  href="/"
+  className="mt-6 text-sm text-[#4f0a0b] underline hover:text-[#2d0809]"
+>
+  ← Kembali ke Dashboard
+</Link>
+
     </div>
   )
 }

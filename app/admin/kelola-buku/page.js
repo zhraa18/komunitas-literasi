@@ -168,7 +168,7 @@ export default function KelolaBuku() {
                 <p className="text-sm text-gray-600">Tahun: {b.tahun}</p>
                 <p className="text-sm text-gray-600">Bahasa: {b.bahasa}</p>
                 <p className="text-sm text-gray-600">Stok: {b.stok}</p>
-                <p className="text-sm text-gray-700 italic mb-2">"{b.detail}"</p>
+                <p className="text-sm text-gray-700 italic mb-2">&quot;{b.detail}&quot;</p>
                 <div className="flex gap-2">
                   <button onClick={() => handleEdit(b)} className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm flex items-center gap-1">
                     <Edit2 className="w-4 h-4" /> Edit

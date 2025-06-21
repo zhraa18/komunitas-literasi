@@ -42,7 +42,7 @@ export default function Dashboard() {
             Komunitas Literasi
           </h2>
           <p className="text-sm text-gray-300">
-            "Membangun budaya baca dan saling berbagi ilmu dalam komunitas yang hangat."
+            &quot;Membangun budaya baca dan saling berbagi ilmu dalam komunitas yang hangat.&quot;
           </p>
         </div>
         <div className="text-xs text-center text-gray-400 mt-10">&copy; 2025 Komunitas Literasi</div>
