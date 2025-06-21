@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { db } from '../../lib/firebase'
 import { doc, getDoc, updateDoc, collection, addDoc } from 'firebase/firestore'
 
-export default function FormPeminjaman() {
+function FormPeminjamanInner() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const bukuId = searchParams.get('id')
@@ -40,16 +40,12 @@ export default function FormPeminjaman() {
     if (!buku) return
 
     try {
-      // Hitung tanggal pinjam dan jatuh tempo
       const tanggalPinjam = new Date()
       const tanggalJatuhTempo = new Date(tanggalPinjam)
-      tanggalJatuhTempo.setDate(tanggalPinjam.getDate() + 7) // 7 hari ke depan
+      tanggalJatuhTempo.setDate(tanggalPinjam.getDate() + 7)
 
-      const formatTanggal = (date) => {
-        return date.toISOString().split('T')[0] // hasil: YYYY-MM-DD
-      }
+      const formatTanggal = (date) => date.toISOString().split('T')[0]
 
-      // 1. Tambah ke koleksi peminjaman
       await addDoc(collection(db, 'peminjaman'), {
         userId: localStorage.getItem('userId'),
         bukuId: buku.id,
@@ -62,9 +58,7 @@ export default function FormPeminjaman() {
         status: 'belum'
       })
 
-      // 2. Kurangi stok buku
-      const bukuRef = doc(db, 'buku', buku.id)
-      await updateDoc(bukuRef, {
+      await updateDoc(doc(db, 'buku', buku.id), {
         stok: buku.stok - 1
       })
 
@@ -123,5 +117,13 @@ export default function FormPeminjaman() {
         </button>
       </form>
     </div>
+  )
+}
+
+export default function FormPeminjaman() {
+  return (
+    <Suspense fallback={<p className="text-center mt-10">Memuat formulir...</p>}>
+      <FormPeminjamanInner />
+    </Suspense>
   )
 }
