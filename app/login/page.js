@@ -5,15 +5,16 @@ import { useRouter } from 'next/navigation'
 import { db } from '../lib/firebase'
 import { collection, query, where, getDocs } from 'firebase/firestore'
 import Link from 'next/link'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [showInfo, setShowInfo] = useState(false)
   const router = useRouter()
 
   const handleLogin = async (e) => {
     e.preventDefault()
-
     try {
       const q = query(
         collection(db, 'users'),
@@ -25,10 +26,8 @@ export default function LoginPage() {
       if (!snapshot.empty) {
         const userDoc = snapshot.docs[0]
         const userData = userDoc.data()
-
         localStorage.setItem('userId', userDoc.id)
         localStorage.setItem('loggedInUser', JSON.stringify(userData))
-
         router.push('/dashboard')
       } else {
         alert('Username atau password salah!')
@@ -81,12 +80,25 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* BOX ESTETIK INFO ADMIN */}
-        <div className="mt-6 text-xs text-white bg-white/10 border border-white/20 rounded-xl p-3 text-center backdrop-blur-md shadow-inner">
-          <p className="opacity-80">🔐 <span className="font-medium">Info Akun Admin</span></p>
-          <p className="opacity-70">Username: <code className="text-white">admin</code></p>
-          <p className="opacity-70">Password: <code className="text-white">admin123</code></p>
+        {/* TOMBOL MATA */}
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={() => setShowInfo(!showInfo)}
+            className="text-white hover:text-gray-300 transition"
+            title="Lihat info admin"
+          >
+            {showInfo ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+          </button>
         </div>
+
+        {/* BOX INFO ADMIN */}
+        {showInfo && (
+          <div className="mt-4 text-xs text-white bg-white/10 border border-white/20 rounded-xl p-3 text-center backdrop-blur-md shadow-inner transition-all duration-500 ease-in-out animate-fade-in">
+            <p className="opacity-80">🔐 <span className="font-medium">Info Akun Admin</span></p>
+            <p className="opacity-70">Username: <code className="text-white">admin</code></p>
+            <p className="opacity-70">Password: <code className="text-white">admin123</code></p>
+          </div>
+        )}
 
         <p className="mt-6 text-center text-sm text-gray-200">
           Belum punya akun?{' '}
@@ -96,6 +108,7 @@ export default function LoginPage() {
         </p>
       </div>
 
+      {/* CSS ANIMASI */}
       <style jsx>{`
         .animate-gradient {
           background-size: 200% 200%;
@@ -111,6 +124,19 @@ export default function LoginPage() {
           100% {
             background-position: 0% 50%;
           }
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(5px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.4s ease-out forwards;
         }
       `}</style>
     </main>
