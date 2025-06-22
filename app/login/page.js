@@ -26,7 +26,6 @@ export default function LoginPage() {
         const userDoc = snapshot.docs[0]
         const userData = userDoc.data()
 
-        // Simpan userId dan data user ke localStorage
         localStorage.setItem('userId', userDoc.id)
         localStorage.setItem('loggedInUser', JSON.stringify(userData))
 
@@ -42,10 +41,8 @@ export default function LoginPage() {
 
   return (
     <main className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
-      {/* Background gradasi maroon ke putih */}
       <div className="absolute inset-0 z-0 animate-gradient bg-gradient-to-br from-[#4f0a0b] to-white" />
 
-      {/* Box login */}
       <div className="relative z-10 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-3xl max-w-md w-full p-8">
         <h2 className="text-3xl font-bold text-white mb-6 text-center font-droid">
           Masuk ke Komunitas
@@ -84,6 +81,13 @@ export default function LoginPage() {
           </button>
         </form>
 
+        {/* BOX ESTETIK INFO ADMIN */}
+        <div className="mt-6 text-xs text-white bg-white/10 border border-white/20 rounded-xl p-3 text-center backdrop-blur-md shadow-inner">
+          <p className="opacity-80">🔐 <span className="font-medium">Info Akun Admin</span></p>
+          <p className="opacity-70">Username: <code className="text-white">admin</code></p>
+          <p className="opacity-70">Password: <code className="text-white">admin123</code></p>
+        </div>
+
         <p className="mt-6 text-center text-sm text-gray-200">
           Belum punya akun?{' '}
           <Link href="/register" className="text-white underline hover:text-gray-300">
@@ -92,7 +96,6 @@ export default function LoginPage() {
         </p>
       </div>
 
-      {/* CSS animasi */}
       <style jsx>{`
         .animate-gradient {
           background-size: 200% 200%;
