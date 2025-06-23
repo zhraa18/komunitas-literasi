@@ -45,25 +45,24 @@ export default function KelolaBuku() {
     }
   }
 
- const uploadToCloudinary = async (file) => {
-  const formData = new FormData()
-  formData.append('file', file)
+  const uploadToCloudinary = async (file) => {
+    const formData = new FormData()
+    formData.append('file', file)
 
-  const res = await fetch('/api/upload', {
-    method: 'POST',
-    body: formData,
-  })
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    })
 
-  if (!res.ok) {
-    const errorText = await res.text()
-    console.error('Upload error:', errorText)
-    throw new Error('Upload ke Cloudinary gagal')
+    if (!res.ok) {
+      const errorText = await res.text()
+      console.error('Upload error:', errorText)
+      throw new Error('Upload ke Cloudinary gagal')
+    }
+
+    const data = await res.json()
+    return data.url
   }
-
-  const data = await res.json()
-  return data.url
-}
-
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -119,8 +118,8 @@ export default function KelolaBuku() {
   }
 
   return (
-    <div className="min-h-screen flex font-sans bg-[#fff5f5]">
-      <aside className="w-20 bg-[#4f090b] text-white flex flex-col items-center py-6 space-y-6 shadow-lg">
+    <div className="min-h-screen flex flex-col md:flex-row font-sans bg-[#fff5f5]">
+      <aside className="w-full md:w-20 bg-[#4f090b] text-white flex md:flex-col flex-row items-center justify-center md:py-6 py-2 space-y-0 md:space-y-6 space-x-4 md:space-x-0 shadow-lg">
         <Link href="/dashboard">
           <button title="Kembali">
             <CornerUpLeft className="w-6 h-6 hover:text-gray-200" />
@@ -128,7 +127,7 @@ export default function KelolaBuku() {
         </Link>
       </aside>
 
-      <main className="flex-1 p-8">
+      <main className="flex-1 p-4 md:p-8 overflow-x-hidden">
         <h1 className="text-3xl font-bold text-[#4f090b] mb-6">Kelola Buku</h1>
 
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md space-y-4 mb-10">
@@ -148,19 +147,15 @@ export default function KelolaBuku() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {books.map((b) => (
-            <div key={b.id} className="bg-white p-4 rounded-lg shadow-md border border-[#f0dada] flex gap-4 items-start">
-              <div className="w-20 h-28 bg-[#f8dcdc] rounded shadow-inner flex-shrink-0 overflow-hidden">
-   <Image
-  src={b.cover?.startsWith('http') ? b.cover : '/book-placeholder.png'}
-  alt={b.judul}
-  width={400}
-  height={300}
-  className="object-contain w-full h-full"
-/>
-
-
-
-
+            <div key={b.id} className="bg-white p-4 rounded-lg shadow-md border border-[#f0dada] flex flex-col sm:flex-row gap-4 items-start">
+              <div className="w-full sm:w-20 h-40 sm:h-28 bg-[#f8dcdc] rounded shadow-inner flex-shrink-0 overflow-hidden">
+                <Image
+                  src={b.cover?.startsWith('http') ? b.cover : '/book-placeholder.png'}
+                  alt={b.judul}
+                  width={400}
+                  height={300}
+                  className="object-contain w-full h-full"
+                />
               </div>
               <div className="flex-1">
                 <h2 className="text-xl font-semibold text-[#4f090b]">{b.judul}</h2>
@@ -169,7 +164,7 @@ export default function KelolaBuku() {
                 <p className="text-sm text-gray-600">Bahasa: {b.bahasa}</p>
                 <p className="text-sm text-gray-600">Stok: {b.stok}</p>
                 <p className="text-sm text-gray-700 italic mb-2">&quot;{b.detail}&quot;</p>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <button onClick={() => handleEdit(b)} className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm flex items-center gap-1">
                     <Edit2 className="w-4 h-4" /> Edit
                   </button>
